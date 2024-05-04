@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -56,6 +57,7 @@ const Courses = () => {
             <th className="border p-4">Price</th>
             <th className="border p-4">Instructor</th>
             <th className="border p-4">Status</th>
+            <th className="border p-4">Content</th>
             <th className="border p-4">Approval</th>
           </tr>
         </thead>
@@ -74,6 +76,15 @@ const Courses = () => {
               <td className="border p-4">{course.price}</td>
               <td className="border p-4">{course.Instructor.join(', ')}</td>
               <td className="border p-4">{course.status}</td>
+              <td className="border p-4">
+              <Link to={`/courseAdmin/${course.courseCode}`}>
+                <button 
+                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  View Content
+                </button>
+              </Link>
+              </td>
               <td className="border p-4">
                 <button 
                   className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
