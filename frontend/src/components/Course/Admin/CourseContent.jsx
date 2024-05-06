@@ -25,6 +25,17 @@ const CourseContent = () => {
     }
   }, [courseCode]);
 
+  // Function to toggle module expansion
+  const toggleModule = (moduleId) => {
+    setCourse(prevCourse => ({
+      ...prevCourse,
+      modules: prevCourse.modules.map(module => ({
+        ...module,
+        expanded: module._id === moduleId ? !module.expanded : module.expanded
+      }))
+    }));
+  };
+
   return (
     <div className="container mx-auto">
       {course && (
@@ -34,22 +45,29 @@ const CourseContent = () => {
           <p className="text-lg text-gray-700 mt-2">Price: {course.price}</p>
           <p className="text-lg text-gray-700">Instructor: {course.Instructor.join(', ')}</p>
           {/* Display existing modules */}
-          <h2 className="text-xl font-bold mt-4">Modules:</h2>
+          <h2 className="text-2xl font-bold mt-8 mb-4">Modules:</h2>
           {course.modules.map(module => (
             <div key={module._id} className="mt-4 border border-gray-300 rounded-lg p-4">
-              <h3 className="text-xl font-semibold mb-2">{module.title}</h3>
-              {/* Display module items */}
-              <ul>
-                {module.moduleItems.map(item => (
-                  <li key={item._id} className="bg-gray-200 rounded-lg p-4 shadow-md mb-2">
-                    <div>
-                      <p className="text-lg font-semibold mb-1">{item.title}</p>
-                      <p className="text-gray-700">{item.type}</p>
-                      <a href={item.url} className="text-blue-500 hover:underline">{item.url}</a>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <h3
+                className="text-xl font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+                onClick={() => toggleModule(module._id)}
+              >
+                {module.title}
+              </h3>
+              {module.expanded && (
+                // Display module items only if the module is expanded
+                <ul>
+                  {module.moduleItems.map(item => (
+                    <li key={item._id} className="bg-gray-100 rounded-lg p-4 shadow-md mb-2">
+                      <div>
+                        <p className="text-lg font-semibold mb-1">{item.title}</p>
+                        <p className="text-gray-700">{item.type}</p>
+                        <a href={item.url} className="text-blue-500 hover:underline">{item.url}</a>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>

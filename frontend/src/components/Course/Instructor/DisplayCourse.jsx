@@ -40,7 +40,7 @@ const Courses = () => {
       <h1 className="text-4xl font-bold mt-8 mb-4 text-center">All Courses</h1>
       <div className="grid grid-cols-3 gap-4">
         {courses.map(course => (
-          <div key={course._id} className="border p-4 rounded flex flex-col">
+          <div key={course._id} className="border p-4 rounded flex flex-col bg-gradient-to-r from-blue-100 to-green-100">
             <Link to={`/courses/${course.courseCode}`}>
               <img 
                 src={course.courseThumbnail} 
@@ -50,7 +50,6 @@ const Courses = () => {
               />
             </Link>
             <h2 className="text-lg font-bold">{course.courseName}</h2>
-            <p className="text-gray-600">{course.description}</p>
             <p className="text-gray-700 mt-2">Price: {course.price}</p>
             <p className="text-gray-700">Instructor: {course.Instructor.join(', ')}</p>
             <p className="text-gray-700 mt-2">Status: {course.status}</p>
