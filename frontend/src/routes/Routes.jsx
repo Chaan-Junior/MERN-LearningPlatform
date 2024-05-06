@@ -1,14 +1,16 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import AddCourse from '../components/Course/Instructor/AddCourse';
-import DisplayCourse from '../components/Course/Instructor/DisplayCourse';
-import AddModulesPage from '../components/Course/Instructor/AddModule';
-import UpdateCourse from '../components/Course/Instructor/UpdateCourse';
+/* eslint-disable no-unused-vars */
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import AddCourse from "../components/Course/Instructor/AddCourse";
+import DisplayCourse from "../components/Course/Instructor/DisplayCourse";
+import AddModulesPage from "../components/Course/Instructor/AddModule";
+import UpdateCourse from "../components/Course/Instructor/UpdateCourse";
 
-import AdminCourse from '../components/Course/Admin/AdminCourses';
-import AdminCourseContent from '../components/Course/Admin/CourseContent';
+import AdminCourse from "../components/Course/Admin/AdminCourses";
+import AdminCourseContent from "../components/Course/Admin/CourseContent";
 
-import UserCourse from '../components/Course/User/UserCourse';
+import UserCourse from "../components/Course/User/UserCourse";
+import Dashboard from "../pages/home/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -20,9 +22,14 @@ const AppRoutes = () => {
         <Route path="/courses/update/:courseCode" element={<UpdateCourse />} />
 
         <Route exact path="/courseAdmin" element={<AdminCourse />} />
-        <Route exact path="/courseAdmin/:courseCode" element={<AdminCourseContent />} />
+        <Route
+          exact
+          path="/courseAdmin/:courseCode"
+          element={<AdminCourseContent />}
+        />
 
         <Route exact path="/courseUser" element={<UserCourse />} />
+        <Route exact path="/admin" element={<Dashboard />} />
       </Routes>
     </div>
   );
