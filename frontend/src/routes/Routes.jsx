@@ -13,7 +13,9 @@ import UserCourse from "../components/Course/User/UserCourse";
 import Dashboard from "../pages/home/Dashboard";
 
 import UserDashboard from "../components/UserHome/Home";
-import CourseDescription from '../components/Course/User/CourseDescription';
+import CourseDescription from "../components/Course/User/CourseDescription";
+
+import SignProcess from "../pages/user/SignProcess";
 
 const AppRoutes = () => {
   return (
@@ -34,9 +36,14 @@ const AppRoutes = () => {
         />
 
         <Route exact path="/courseUser" element={<UserCourse />} />
-        <Route exact path="/courseContent/:courseCode" element={<CourseDescription />} />
-        
+        <Route
+          exact
+          path="/courseContent/:courseCode"
+          element={<CourseDescription />}
+        />
+
         <Route exact path="/userHome" element={<UserDashboard />} />
+        <Route exact path="/sign" element={<SignProcess />} />
       </Routes>
     </div>
   );
