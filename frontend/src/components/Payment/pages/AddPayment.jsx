@@ -11,12 +11,18 @@ export default function AddPayment() {
     const [cid, setCid] = useState('');
     const [amt, setAmt] = useState('');
     const { courseCode, price } = useParams();
+
+    const tokenString = localStorage.getItem('token');
+
+    const tokenPayload = JSON.parse(atob(tokenString.split(".")[1]));
+    
+    const uid = tokenPayload.name;
     
     useEffect(() => {
       if (courseCode) setCid(courseCode);
-      if (uname) setUname(uname);
+      if (uid) setUname(uid);
       if (price) setAmt(price);
-  }, [courseCode, price]);
+  }, [courseCode,uid, price]);
   
   const paymentData = { uname, cid, amt };
   console.log(uname, cid, amt);
@@ -31,7 +37,7 @@ export default function AddPayment() {
             <form className="flex flex-col gap-4">
                 <div >
                     <Label  value="Username"/>
-                    <TextInput type="text" placeholder="Username" id="uname" onChange={(e)=>setUname(e.target.value)}/>
+                    <TextInput type="text" placeholder="Username" id="uname" value={uname} onChange={(e)=>setUname(e.target.value)}/>
                 </div>
                 <div >
                     <Label  value='Course ID'/>

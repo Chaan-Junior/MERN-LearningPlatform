@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
       throw new Error("Invalid Password, Try again!");
     }
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET);
+    const token = jwt.sign({ userId: user._id, role: user.role, name: user.name }, JWT_SECRET);
     res.json({ token });
   } catch (error) {
     res.status(400).json({ error: error.message });

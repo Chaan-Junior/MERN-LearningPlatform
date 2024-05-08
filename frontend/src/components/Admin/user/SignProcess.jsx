@@ -37,11 +37,15 @@ const SignProcess = () => {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
+
+        console.log("Login data:", data);
         // Save token to local storage
         localStorage.setItem("token", data.token);
 
         // Extract role from token
         const tokenPayload = JSON.parse(atob(data.token.split(".")[1]));
+
+        console.log("Token payload:", tokenPayload);
         const userRole = tokenPayload.role;
 
         if (userRole === "admin" || userRole === "instructor") navigate("/admin");
