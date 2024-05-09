@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Flexing from "./Flexing";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Breadcrumb, Layout, Menu, theme, Avatar, Dropdown, Input } from "antd";
 import {
   TeamOutlined,
   GiftOutlined,
@@ -11,23 +9,28 @@ import {
   BellOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme, Avatar, Dropdown, Input } from "antd";
 
-import PriceChart from "./PriceChart";
-import ManualData from "./ManualData";
+// dynamic change in content
+import ShowFirst from "./ShowFirst";
+import UserList from "../user/UserList";
+import AdminCourse from "../../Course/Admin/AdminCourses";
+import AddCourse from "../../Course/Instructor/AddCourse";
 
 const { Header, Content, Sider } = Layout;
 
 const handleLogout = () => {
-  // Perform logout actions here, e.g., clearing token from localStorage
   localStorage.removeItem("token");
   window.location.href = "/";
-  // Redirect or perform any additional actions after logout if needed
-  // Example: window.location.href = "/login";
 };
 
 const Layouts = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [selectedKey, setSelectedKey] = useState("1");
+
+  const handleMenuClick = ({ key }) => {
+    setSelectedKey(key);
+  };
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -80,249 +83,26 @@ const Layouts = () => {
             maxWidth: "240px",
             textAlign: "center",
           }}
-          items={[
-            {
-              key: "1",
-              icon: (
-                <HomeOutlined
-                  style={{
-                    fontSize: "18px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                />
-              ),
-              label: (
-                <span
-                  style={{
-                    fontSize: "14px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  <Link to="/">Home</Link>
-                </span>
-              ),
-              style: {
-                marginBottom: "10px",
-                borderRadius: "5px",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
-                "&:active": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                },
-              },
-            },
-            {
-              key: "sub1",
-              icon: (
-                <SnippetsOutlined
-                  style={{
-                    fontSize: "18px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                />
-              ),
-              label: (
-                <span
-                  style={{
-                    fontSize: "14px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  Courses
-                </span>
-              ),
-              children: [
-                {
-                  key: "3",
-                  label: (
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#fff",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <Link to="/courseAdmin">View</Link>
-                    </span>
-                  ),
-                  style: {
-                    marginBottom: "10px",
-                    borderRadius: "5px",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                    "&:active": {
-                      backgroundColor: "rgba(255, 255, 255, 0.2)",
-                    },
-                  },
-                },
-                {
-                  key: "4",
-                  label: (
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#fff",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <Link to="/addCourses">Create</Link>
-                    </span>
-                  ),
-                  style: {
-                    marginBottom: "10px",
-                    borderRadius: "5px",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                    "&:active": {
-                      backgroundColor: "rgba(255, 255, 255, 0.2)",
-                    },
-                  },
-                },
-              ],
-              style: {
-                marginBottom: "10px",
-                borderRadius: "5px",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
-                "&:active": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                },
-              },
-            },
-            {
-              key: "sub2",
-              icon: (
-                <TeamOutlined
-                  style={{
-                    fontSize: "18px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                />
-              ),
-              label: (
-                <span
-                  style={{
-                    fontSize: "14px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  Users
-                </span>
-              ),
-              children: [
-                {
-                  key: "6",
-                  label: (
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#fff",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <Link to="/users">View</Link>
-                    </span>
-                  ),
-                  style: {
-                    marginBottom: "10px",
-                    borderRadius: "5px",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                    "&:active": {
-                      backgroundColor: "rgba(255, 255, 255, 0.2)",
-                    },
-                  },
-                },
-                {
-                  key: "8",
-                  label: (
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        color: "#fff",
-                        transition: "all 0.3s ease",
-                      }}
-                    >
-                      <Link to="/users/create">Create</Link>
-                    </span>
-                  ),
-                  style: {
-                    marginBottom: "10px",
-                    borderRadius: "5px",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                    "&:active": {
-                      backgroundColor: "rgba(255, 255, 255, 0.2)",
-                    },
-                  },
-                },
-              ],
-              style: {
-                marginBottom: "10px",
-                borderRadius: "5px",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
-                "&:active": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                },
-              },
-            },
-            {
-              key: "9",
-              icon: (
-                <GiftOutlined
-                  style={{
-                    fontSize: "18px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                />
-              ),
-              label: (
-                <span
-                  style={{
-                    fontSize: "14px",
-                    color: "#fff",
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  Folders
-                </span>
-              ),
-              style: {
-                marginBottom: "10px",
-                borderRadius: "5px",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  backgroundColor: "rgba(255, 255, 255, 0.1)",
-                },
-                "&:active": {
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                },
-              },
-            },
-          ]}
-        />
+          onClick={handleMenuClick}
+          selectedKeys={[selectedKey]}
+        >
+          {/* Menu items */}
+          <Menu.Item key="1" icon={<HomeOutlined />}>
+            Home
+          </Menu.Item>
+          <Menu.SubMenu key="sub1" icon={<SnippetsOutlined />} title="Courses">
+            <Menu.Item key="3">View</Menu.Item>
+            <Menu.Item key="4">Create</Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.Item icon={<TeamOutlined />} key="6">
+            Users
+          </Menu.Item>
+
+          <Menu.Item key="9" icon={<GiftOutlined />}>
+            Folders
+          </Menu.Item>
+        </Menu>
       </Sider>
       <Layout style={{ marginLeft: collapsed ? 80 : 200 }}>
         <Header
@@ -360,7 +140,6 @@ const Layouts = () => {
                     containerSize: "40px",
                     containerShape: "circle",
                     backgroundColor: "pink",
-
                     verticalAlign: "middle",
                   }}
                 >
@@ -389,19 +168,10 @@ const Layouts = () => {
             <Breadcrumb.Item>Active</Breadcrumb.Item>
             <Breadcrumb.Item>Courses</Breadcrumb.Item>
           </Breadcrumb>
-          <h1>SUMMARY</h1>
-          <br />
-          <ManualData />
-          <br />
-          <h1>LATEST COURSES</h1>
-          <br />
-          <Flexing />
-          <br />
-          <h1>STATISTICS</h1>
-          <br />
-          <PriceChart />
-
-          <br />
+          {selectedKey === "1" && <ShowFirst />}
+          {selectedKey === "3" && <AdminCourse />}
+          {selectedKey === "4" && <AddCourse />}
+          {selectedKey === "6" && <UserList />}
         </Content>
       </Layout>
     </Layout>
