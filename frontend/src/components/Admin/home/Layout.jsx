@@ -148,7 +148,7 @@ const Layouts = () => {
                         transition: "all 0.3s ease",
                       }}
                     >
-                      <Link to="/display">View</Link>
+                      <Link to="/courseAdmin">View</Link>
                     </span>
                   ),
                   style: {

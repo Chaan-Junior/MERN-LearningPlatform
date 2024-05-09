@@ -23,7 +23,7 @@ const AppRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route exact path="/addCourse" element={<AddCourse />} />
+        <Route exact path="/addCourses" element={<AddCourse />} />
         <Route exact path="/display" element={<DisplayCourse />} />
         <Route path="/courses/:courseCode" element={<AddModulesPage />} />
         <Route path="/courses/update/:courseCode" element={<UpdateCourse />} />

@@ -68,4 +68,6 @@ router.put(
   userController.grantInstructorAccess
 );
 
+router.put("/addEnrolledCourses/",userController.addEnrolledCourses);
+
 module.exports = router;

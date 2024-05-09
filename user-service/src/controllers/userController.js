@@ -41,7 +41,7 @@ const loginUser = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user._id, role: user.role, name: user.name },
+      { userId: user._id, role: user.role, name: user.name , email: user.email},
       JWT_SECRET
     );
     res.json({ token });
@@ -72,6 +72,25 @@ const updateUserProfile = async (req, res) => {
 
     user.name = name;
     user.email = email;
+
+    await user.save();
+    res.json({ user, message: "User profile updated successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const addEnrolledCourses = async (req, res) => {
+  try {
+    const {userId, courseId} = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.enrolledCourses = [...user.enrolledCourses, courseId];
 
     await user.save();
     res.json({ user, message: "User profile updated successfully" });
@@ -214,4 +233,5 @@ module.exports = {
   getUsersByRole,
   grantInstructorAccess,
   getUserProfile,
+  addEnrolledCourses
 };

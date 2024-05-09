@@ -2,30 +2,60 @@ import { Alert, Button, Label, TextInput } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import PayPal from '../components/PayPal';
+import axios from 'axios';
 
 
 export default function AddPayment() {
 
     const [pay, setPay] = useState(false);
     const [uname, setUname] = useState('');
+    const [uId, setUid] = useState('');
     const [cid, setCid] = useState('');
     const [amt, setAmt] = useState('');
+    const [courseData, setCourseData] = useState({});
     const { courseCode, price } = useParams();
 
     const tokenString = localStorage.getItem('token');
 
     const tokenPayload = JSON.parse(atob(tokenString.split(".")[1]));
     
-    const uid = tokenPayload.name;
+    const uName = tokenPayload.name;
+    const uid = tokenPayload.userId;
+
+    const email = tokenPayload.email;
+    console.log(tokenPayload);
+
+    console.log(uName, uid);
     
     useEffect(() => {
       if (courseCode) setCid(courseCode);
-      if (uid) setUname(uid);
+      if (uName) setUname(uName);
       if (price) setAmt(price);
-  }, [courseCode,uid, price]);
+      if (uid) setUid(uid);
+
+      axios.get(`http://localhost:8070/api/${courseCode}`)
+    .then(response => {
+      if (response && response.data && response.data.course) {
+        const { _id, courseCode } = response.data.course;
+        
+        console.log('Course ID:', _id);
+        console.log('Course Code:', courseCode);
+        
+        setCourseData(_id);
+      }
+    })
+    .catch(error => {
+     
+      console.error('Error fetching course data:', error);
+    });
+
+      
+
+  }, [courseCode,uName, price, uid]);
   
-  const paymentData = { uname, cid, amt };
-  console.log(uname, cid, amt);
+  const paymentData = { uname, cid, amt, uId, courseData, email};
+  console.log(uname, cid, amt, uId);
+  console.log(courseData);
    
 
   return (
@@ -61,7 +91,7 @@ export default function AddPayment() {
             Pay with Paypal
           </p>
           <Link onClick={() => {setPay(true)}} className=" text-4xl font-bold">
-            <span className="px-2 py-1 italic text-blue-800 rounded-lg text-white">
+            <span className="px-2 py-1 italic text-blue-800 rounded-lg">
               Pay
             </span>
             <span className='text-cyan-500 italic'>

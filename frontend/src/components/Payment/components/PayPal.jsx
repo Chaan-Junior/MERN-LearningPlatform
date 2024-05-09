@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default function PayPal(props) {
 
-    const  { uname, cid, amt } = props.paymentData;
+    const  { uname, cid, amt, uId, courseData, email } = props.paymentData;
     const navigate = useNavigate();
     const paypal = useRef();
 
@@ -53,6 +53,8 @@ export default function PayPal(props) {
                         title: "Payment Successful!",
                         icon: "success"
                     });
+                    await axios.put('http://localhost:7000/api/users/addEnrolledCourses' , { courseId: courseData, userId: uId });
+                    await axios.post('http://localhost:3002/api/enroll/enroll', { courseId: courseData, userId: uId, email: email});
                  navigate(`/coursedetails/${cid}`)
                 } catch (error) {
                     console.error('Error sending payment data to the server:', error);
