@@ -7,8 +7,12 @@ const nodemailer = require('nodemailer');
     auth: {
       user: "testthuwa@outlook.com",
       pass: "Vijay@123",
+    },
+    tls: {
+      rejectUnauthorized: false // Disable certificate verification
     }
   });
+  
 
   // Define email options
   let mailOptions = {

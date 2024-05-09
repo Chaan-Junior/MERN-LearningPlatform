@@ -20,10 +20,8 @@ app.listen(3000, () => {
 
 app.use('/api/payment', paymentRoutes);
 
-mongoose.connect(process.env.MONGO_URI, {dbName : "payment"}).then( () => {
+mongoose.connect(process.env.MONGO_URI).then( () => {
     console.log("Connected to MongoDB")}
   ).catch((err) => {
     console.log("Error: ", err);
   });
-
-

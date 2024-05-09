@@ -2,11 +2,16 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const enrollmentRoutes = require("./routes/enrollmentRoute");
+const cors = require("cors");
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3002;
 const DB_URI = "mongodb+srv://Shobi:Shobi2000@course-service.8eivznc.mongodb.net/Coursedb?retryWrites=true&w=majority&appName=course-service";
+
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
 
 // Middleware
 app.use(bodyParser.json());

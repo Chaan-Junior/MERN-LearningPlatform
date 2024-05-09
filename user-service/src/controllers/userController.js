@@ -40,7 +40,10 @@ const loginUser = async (req, res) => {
       throw new Error("Invalid Password, Try again!");
     }
 
-    const token = jwt.sign({ userId: user._id, role: user.role, name: user.name }, JWT_SECRET);
+    const token = jwt.sign(
+      { userId: user._id, role: user.role, name: user.name , email: user.email},
+      JWT_SECRET
+    );
     res.json({ token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -77,6 +80,25 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const addEnrolledCourses = async (req, res) => {
+  try {
+    const {userId, courseId} = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    user.enrolledCourses = [...user.enrolledCourses, courseId];
+
+    await user.save();
+    res.json({ user, message: "User profile updated successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const deleteUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -102,6 +124,8 @@ const updateUserRole = async (req, res) => {
     const { role } = req.body;
 
     const user = await User.findById(userId);
+    console.log(role);
+    console.log(user);
 
     if (!user) {
       throw new Error("User not found");
@@ -135,6 +159,68 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// 1. User can view their details
+const getAllUsers = async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      // Only admins can access this route
+      throw new Error("Unauthorized");
+    }
+    const users = await User.find({}, { password: 0 }); // Exclude password field
+    res.json({ users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// 2. Admin can view all registered users
+const getUsersByRole = async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      // Only admins can access this route
+      throw new Error("Unauthorized");
+    }
+    const role = req.params.role;
+    const users = await User.find({ role }, { password: 0 }); // Exclude password field
+    res.json({ users });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// 3. Admin can view users by their roles (learners, instructors)
+const grantInstructorAccess = async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      // Only admins can access this route
+      throw new Error("Unauthorized");
+    }
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    user.role = "instructor";
+    user.instructorAccess = req.body.instructorAccess; // Set instructor access permissions
+    await user.save();
+    res.json({ user, message: "Instructor access granted successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    res.json({ user });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
@@ -143,4 +229,9 @@ module.exports = {
   deleteUserProfile,
   updateUserRole,
   deleteUser,
+  getAllUsers,
+  getUsersByRole,
+  grantInstructorAccess,
+  getUserProfile,
+  addEnrolledCourses
 };

@@ -11,22 +11,18 @@ const enrollmentSchema = new mongoose.Schema({
     ref: "Course",
     required: true
   },
-  percentage: {
-    type: Number,
-    default: 0
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  }
+  progress: [{
+    moduleItemID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ModuleItem"
+    },
+    percentage: {
+      type: Number,
+      default: 0
+    }
+  }]
+},{
+  timestamps: true
 });
 
 const Enrollment = mongoose.model("Enrollment", enrollmentSchema);

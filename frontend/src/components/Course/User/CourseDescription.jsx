@@ -15,28 +15,59 @@ const CourseDescription = () => {
   const { courseCode } = useParams();
   const [course, setCourse] = useState(null);
   const [expandedModules, setExpandedModules] = useState([]);
+  const [enrollmentStatus, setEnrollmentStatus] = useState(false); // New state for enrollment status
 
-  useEffect(() => {
-    const fetchCourseDetails = async () => {
+  const tokenString = localStorage.getItem('token');
+
+    const tokenPayload = JSON.parse(atob(tokenString.split(".")[1]));
+    const uid = tokenPayload.userId;
+
+    useEffect(() => {
+      const fetchCourseDetails = async () => {
+        try {
+          const response = await fetch(`http://localhost:8070/api/${courseCode}`);
+          const data = await response.json();
+          setCourse(data.course);
+          setExpandedModules(Array(data.course.modules.length).fill(false));
+    
+          // Check enrollment status when course details are fetched
+          const enrollmentResponse = await fetchEnrollmentStatus(data.course._id); // Assuming you have a function fetchEnrollmentStatus
+          setEnrollmentStatus(enrollmentResponse.value);
+        } catch (error) {
+          console.error("Error fetching course details:", error);
+        }
+      };
+    
+      // Check if there's data in localStorage
+      const storedCourseData = localStorage.getItem("courseData");
+      if (storedCourseData) {
+        setCourse(JSON.parse(storedCourseData));
+      } else {
+        fetchCourseDetails();
+      }
+    }, [courseCode]);
+    
+    // Function to fetch enrollment status
+    const fetchEnrollmentStatus = async (courseId) => {
+      console.log('Course ID:', courseId);
       try {
-        const response = await fetch(`http://localhost:8070/api/${courseCode}`);
+        const response = await fetch("http://localhost:3002/api/enroll/checkEnrollment", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            courseId : courseId,
+            userId: uid,
+          }),
+        });
         const data = await response.json();
-        setCourse(data.course);
-        // Initialize expandedModules state with false for each module
-        setExpandedModules(Array(data.course.modules.length).fill(false));
+        return data;
       } catch (error) {
-        console.error("Error fetching course details:", error);
+        console.error("Error fetching enrollment status:", error);
+        return { value: false }; // Default to false in case of error
       }
     };
-
-    // Check if there's data in localStorage
-    const storedCourseData = localStorage.getItem("courseData");
-    if (storedCourseData) {
-      setCourse(JSON.parse(storedCourseData));
-    } else {
-      fetchCourseDetails();
-    }
-  }, [courseCode]);
 
   // Toggle the visibility of module items
   const toggleModule = (index) => {
@@ -60,11 +91,19 @@ const CourseDescription = () => {
                 <p className="text-lg text-gray-300">
                   Instructor: {course.Instructor.join(", ")}
                 </p>
-                <Link to={`/addPay/${course.courseCode}/${course.price}`}>
-                  <button className="bg-purple-600 text-white px-4 py-2 rounded">
-                    Buy
-                  </button>
-                </Link>
+                {enrollmentStatus ? (
+                  <Link to={`/coursedetails/${course.courseCode}`}> {/* Assuming viewCourse route exists */}
+                    <button className="bg-green-600 text-white px-4 py-2 rounded">
+                      View
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to={`/addPay/${course.courseCode}/${course.price}`}>
+                    <button className="bg-purple-600 text-white px-4 py-2 rounded">
+                      Buy
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
             <br />
