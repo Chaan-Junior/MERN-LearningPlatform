@@ -48,7 +48,8 @@ const SignProcess = () => {
         console.log("Token payload:", tokenPayload);
         const userRole = tokenPayload.role;
 
-        if (userRole === "admin" || userRole === "instructor") navigate("/admin");
+        if (userRole === "admin") {navigate("/admin")}
+        else if (userRole === "instructor") {navigate("/instructor")}
         else {
           navigate("/userHome");
         }

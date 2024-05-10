@@ -40,7 +40,7 @@ const Courses = () => {
       <h1 className="text-4xl font-bold mt-8 mb-4 text-center">All Courses</h1>
       <div className="grid grid-cols-3 gap-4">
         {courses.map(course => (
-          <div key={course._id} className="border p-4 rounded flex flex-col bg-gradient-to-r from-blue-100 to-green-100">
+          <div key={course._id} className="border p-4 rounded flex flex-col bg-gradient-to-r from-blue-100 to-green-100 text-sm">
             <Link to={`/courses/${course.courseCode}`}>
               <img 
                 src={course.courseThumbnail} 

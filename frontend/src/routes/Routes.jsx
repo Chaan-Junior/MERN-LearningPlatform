@@ -17,6 +17,7 @@ import ViewPayment from "../components/Payment/pages/Payment";
 import UserDashboard from "../components/UserHome/Home";
 import SignProcess from "../components/Admin/user/SignProcess";
 import Dashboard from "../components/Admin/home/Dashboard";
+import InstructorDashboard from "../components/Admin/instructor/Dashboard";
 import UserList from "../components/Admin/user/UserList";
 
 const AppRoutes = () => {
@@ -51,6 +52,7 @@ const AppRoutes = () => {
         <Route exact path="/pay" element={<ViewPayment />} />
 
         <Route exact path="/admin" element={<Dashboard />} />
+        <Route exact path="/instructor" element={<InstructorDashboard />} />
         <Route exact path="/userHome" element={<UserDashboard />} />
         <Route exact path="/" element={<SignProcess />} />
         <Route exact path="/admin/users" element={<UserList />} />
