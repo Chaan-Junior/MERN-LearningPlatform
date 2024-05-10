@@ -49,8 +49,10 @@ const AddCourse = () => {
   };
 
   return (
+    <>
+    <div className='bg-gradient-to-r from-blue-100 to-green-100'>
+    <h2 className="text-4xl font-bold mb-4 text-center">Add Course</h2>
     <div className="max-w-md mx-auto bg-gray-200 px-4 py-8 border border-black rounded-md">
-      <h2 className="text-4xl font-bold mb-4 text-center">Add Course</h2>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
         <div className="mb-4">
           <label htmlFor="courseCode" className="block text-lg font-medium text-gray-700">Course Code:</label>
@@ -91,6 +93,8 @@ const AddCourse = () => {
         </div>
       </form>
     </div>
+    </div>
+    </>
   );
 };
 

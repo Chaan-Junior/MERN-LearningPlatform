@@ -25,5 +25,3 @@ mongoose.connect(process.env.MONGO_URI).then( () => {
   ).catch((err) => {
     console.log("Error: ", err);
   });
-
-

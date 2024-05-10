@@ -66,7 +66,9 @@ const UpdateCourse = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-200 px-4 py-8 border border-black rounded-md">
+    <>
+    <div className='bg-gradient-to-r from-blue-100 to-green-100'>
+    <div className="max-w-md mx-auto bg-gray-300 px-4 py-8 border border-black rounded-md">
       <h1 className="text-4xl font-bold mb-4 text-center">Update Course</h1>
       <form className="max-w-lg mx-auto" onClick={handleSubmit} >
         <div className="mb-8">
@@ -105,6 +107,8 @@ const UpdateCourse = () => {
         </Link>
       </form>
     </div>
+    </div>
+    </>
   );
 };
 
