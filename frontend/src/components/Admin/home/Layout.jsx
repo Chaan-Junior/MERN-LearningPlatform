@@ -3,11 +3,12 @@ import { Breadcrumb, Layout, Menu, theme, Avatar, Dropdown, Input } from "antd";
 import {
   TeamOutlined,
   GiftOutlined,
-  SnippetsOutlined,
+  FileTextOutlined,
   HomeOutlined,
   LogoutOutlined,
   BellOutlined,
   SearchOutlined,
+  DollarOutlined 
 } from "@ant-design/icons";
 
 // dynamic change in content
@@ -15,6 +16,7 @@ import ShowFirst from "./ShowFirst";
 import UserList from "../user/UserList";
 import AdminCourse from "../../Course/Admin/AdminCourses";
 import AddCourse from "../../Course/Instructor/AddCourse";
+import Payment from "../../Payment/pages/Payment";
 
 const { Header, Content, Sider } = Layout;
 
@@ -90,17 +92,15 @@ const Layouts = () => {
           <Menu.Item key="1" icon={<HomeOutlined />}>
             Home
           </Menu.Item>
-          <Menu.SubMenu key="sub1" icon={<SnippetsOutlined />} title="Courses">
-            <Menu.Item key="3">View</Menu.Item>
-            <Menu.Item key="4">Create</Menu.Item>
-          </Menu.SubMenu>
+          
+            <Menu.Item key="3" icon={<FileTextOutlined/>}>Courses</Menu.Item>
+            
+         
 
-          <Menu.Item icon={<TeamOutlined />} key="6">
-            Users
-          </Menu.Item>
+          <Menu.Item icon={<TeamOutlined/>} key="6">Users</Menu.Item>
 
-          <Menu.Item key="9" icon={<GiftOutlined />}>
-            Folders
+          <Menu.Item key="7" icon={<DollarOutlined />}>
+            Payment
           </Menu.Item>
         </Menu>
       </Sider>
@@ -172,6 +172,7 @@ const Layouts = () => {
           {selectedKey === "3" && <AdminCourse />}
           {selectedKey === "4" && <AddCourse />}
           {selectedKey === "6" && <UserList />}
+          {selectedKey === "7" && <Payment />}
         </Content>
       </Layout>
     </Layout>

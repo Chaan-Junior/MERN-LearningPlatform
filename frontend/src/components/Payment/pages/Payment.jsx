@@ -39,7 +39,7 @@ export default function Payments() {
                                 <th scope="col" className="py-3 px-6"> ID</th>
                                 <th scope="col" className="py-3 px-6">User ID</th>
                                 <th scope="col" className="py-3 px-6">Course ID</th>
-                                <th scope="col" className="py-3 px-6">Amount</th>
+                                <th scope="col" className="py-3 px-6">Amount $</th>
                                 
                             </tr>
                         </thead>

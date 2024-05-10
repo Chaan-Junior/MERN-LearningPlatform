@@ -37,19 +37,19 @@ const UpdateRoleModal = ({ user, onClose, onSuccess }) => {
           <h2 className="text-xl font-bold mb-4">Update Role</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}{" "}
           {/* Display error message if request fails */}
-          <p>
+          <p className="text-sm">
             Are you sure you want to update {user.name} s role to instructor?
           </p>
           <div className="mt-6 flex justify-end">
             <button
-              className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+              className="bg-gray-500 text-sm text-white px-4 py-2 rounded-md mr-2"
               onClick={onClose}
               disabled={isLoading}
             >
               Cancel
             </button>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              className="bg-blue-500 text-white text-sm px-4 py-2 rounded-md"
               onClick={handleUpdateRole} // Attach handleUpdateRole to onClick event
               disabled={isLoading}
             >

@@ -178,7 +178,7 @@ const UserList = () => {
                 <p className="text-gray-600 text-sm mt-2">Role: {user.role}</p>
                 {user.role !== "instructor" && user.role !== "admin" && (
                   <button
-                    className="mt-4 bg-blue-500 text-white font-semibold py-1 px-3 rounded-md transition duration-300 hover:bg-blue-600"
+                    className="mt-4 bg-blue-500 text-sm ml-12 text-white font-semibold py-1 px-1 rounded-md transition duration-300 hover:bg-blue-600"
                     onClick={() => handleUpdateRole(user)}
                   >
                     Make Instructor
@@ -202,7 +202,7 @@ const UserList = () => {
               Previous
             </button>
             <button
-              className={`ml-3 relative inline-flex items-center px-2 py-1 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition duration-300 ${
+              className={`ml-3 relative inline-flex items-center px-2 py-1 border border-gray-300 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition duration-300 ${
                 currentPage === totalPages
                   ? "bg-gray-100 cursor-not-allowed"
                   : ""
@@ -254,9 +254,12 @@ const UserList = () => {
                     />
                   </svg>
                 </button>
+                <span className="text-sm">
+
                 {renderPageNumbers()}
+                </span >
                 <button
-                  className={`relative inline-flex items-center px-2 py-1 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-300 ${
+                  className={`relative inline-flex items-center px-2 py-1 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-300 ${
                     currentPage === totalPages
                       ? "bg-gray-100 cursor-not-allowed"
                       : ""
@@ -264,9 +267,9 @@ const UserList = () => {
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
-                  <span className="sr-only">Next</span>
+                  <span className="sr-only ml-2">Next</span>
                   <svg
-                    className="h-2 w-2"
+                    className="h-5 w-5"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"

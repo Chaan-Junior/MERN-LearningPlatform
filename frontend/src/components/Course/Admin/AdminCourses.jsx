@@ -78,10 +78,10 @@ const Courses = () => {
 
   return (
     <div className="container mx-auto">
-    <h1 className="text-4xl font-bold mt-8 mb-4 text-center">All Courses</h1>
+    <h1 className="text-3xl font-bold mt-8 mb-4 text-center">All Courses</h1>
     {/* Published Courses */}
-    <h2 className="text-2xl font-bold mt-8 mb-4">Published Courses</h2>
-    <table className="border-collapse w-full">
+    <h2 className="text-xl font-bold mt-8 mb-4">Published Courses</h2>
+    <table className="border-collapse w-full text-sm">
       <thead>
         <tr className="bg-gray-300">
           <th className="border p-4">Thumbnail</th>
@@ -95,7 +95,7 @@ const Courses = () => {
       </thead>
       <tbody>
         {publishedCourses.map(course => (
-          <tr key={course._id} className="hover:bg-gray-100">
+          <tr key={course._id} className="hover:bg-gray-100  text-sm">
             {/* Render each published course */}
             <td className="border p-4">
               <img 
@@ -138,8 +138,8 @@ const Courses = () => {
     </table>
 
     {/* RePublished Courses */}
-    <h2 className="text-2xl font-bold mt-8 mb-4">RePublished Courses</h2>
-    <table className="border-collapse w-full">
+    <h2 className="text-xl font-bold mt-8 mb-4">RePublished Courses</h2>
+    <table className="border-collapse w-full  text-sm">
       <thead>
         <tr className="bg-gray-300">
           <th className="border p-4">Thumbnail</th>
@@ -196,8 +196,8 @@ const Courses = () => {
     </table>
 
 {/* Approved Courses */}
-<h2 className="text-2xl font-bold mt-8 mb-4">Approved Courses</h2>
-    <table className="border-collapse w-full">
+<h2 className="text-xl font-bold mt-8 mb-4">Approved Courses</h2>
+    <table className="border-collapse w-full  text-sm">
       <thead>
         <tr className="bg-gray-300">
           <th className="border p-4">Thumbnail</th>
@@ -221,10 +221,10 @@ const Courses = () => {
             <td className="border p-4">{course.courseName}</td>
             <td className="border p-4">{course.price}</td>
             <td className="border p-4">{course.Instructor.join(', ')}</td>
-            <td className="border p-4">
+            <td className="border p-4 items-center">
               <Link to={`/courseAdmin/${course.courseCode}`}>
                 <button 
-                  className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                  className="bg-green-500 items-center hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
                 >
                   View Content
                 </button>
