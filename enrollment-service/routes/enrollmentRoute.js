@@ -12,6 +12,8 @@ router.get("/enrolledUser/:userId", enrollmentController.getEnrollmentsByUserId)
 
 router.post("/checkEnrollment", enrollmentController.checkEnrollment);
 
+router.put("/updateProgress", enrollmentController.updateProgress);
+
 // DELETE endpoint to deactivate enrollment
 //router.delete("/:enrollmentId", verifyToken, enrollmentController.deactivateEnrollment);
 

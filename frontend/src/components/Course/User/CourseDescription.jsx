@@ -68,7 +68,6 @@ const CourseDescription = () => {
         return { value: false }; // Default to false in case of error
       }
     };
-    
 
   // Toggle the visibility of module items
   const toggleModule = (index) => {
