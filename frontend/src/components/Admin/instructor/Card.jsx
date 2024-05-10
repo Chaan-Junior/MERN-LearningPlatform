@@ -1,4 +1,4 @@
-import { Card, Col } from "antd";
+import { Card, Col, Row } from "antd";
 import styled from "styled-components";
 
 const StyledCard = styled(Card)`
@@ -6,6 +6,7 @@ const StyledCard = styled(Card)`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   overflow: hidden;
+  margin-bottom: 16px;
 
   &:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -54,19 +55,56 @@ const CardActions = styled.div`
 `;
 
 const Cards = () => (
-  <Col xs={24} sm={12} md={8} lg={6}>
-    <StyledCard>
-      <CardImage />
-      <CardContent>
-        <CardTitle>Web Development</CardTitle>
-        <CardDescription>
-          Basic Introduction course to Web Development
-        </CardDescription>
-        <CardActions>
-        </CardActions>
-      </CardContent>
-    </StyledCard>
-  </Col>
+  <Row gutter={[16, 16]}>
+    <Col xs={24} sm={12} md={8} lg={6}>
+      <StyledCard>
+        <CardImage />
+        <CardContent>
+          <CardTitle>Java Development</CardTitle>
+          <CardDescription>
+            Basic Introduction course to Java Language
+          </CardDescription>
+          <CardActions></CardActions>
+        </CardContent>
+      </StyledCard>
+    </Col>
+    <Col xs={24} sm={12} md={8} lg={6}>
+      <StyledCard>
+        <CardImage />
+        <CardContent>
+          <CardTitle>Python Development</CardTitle>
+          <CardDescription>
+            Basic Introduction course to Python Language
+          </CardDescription>
+          <CardActions></CardActions>
+        </CardContent>
+      </StyledCard>
+    </Col>
+    <Col xs={24} sm={12} md={8} lg={6}>
+      <StyledCard>
+        <CardImage />
+        <CardContent>
+          <CardTitle>Distributed Systems</CardTitle>
+          <CardDescription>
+            Basic Introduction course to Distributed Systems
+          </CardDescription>
+          <CardActions></CardActions>
+        </CardContent>
+      </StyledCard>
+    </Col>
+    <Col xs={24} sm={12} md={8} lg={6}>
+      <StyledCard>
+        <CardImage />
+        <CardContent>
+          <CardTitle>C# Programming</CardTitle>
+          <CardDescription>
+            Basic Introduction course to C# Language
+          </CardDescription>
+          <CardActions></CardActions>
+        </CardContent>
+      </StyledCard>
+    </Col>
+  </Row>
 );
 
 export default Cards;

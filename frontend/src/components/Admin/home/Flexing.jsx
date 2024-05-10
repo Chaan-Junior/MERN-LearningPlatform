@@ -13,9 +13,7 @@ const Flexing = () => {
       ></Radio.Group>
       <Flex vertical={value === "vertical"}>
         <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
+
       </Flex>
     </Flex>
   );
