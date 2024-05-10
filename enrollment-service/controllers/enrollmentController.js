@@ -7,15 +7,15 @@ const { sendEmail } = require("../util/email");
 // Controller function to create a new enrollment
 const createEnrollment = async (req, res) => {
   try {
-    const { courseId, userId ,email} = req.body;
+    const { courseId, userId ,email, courseCode} = req.body;
 
     // Check if the user is already enrolled in the course
-    const existingEnrollment = await Enrollment.findOne({ userID: userId, courseID: courseId });
+    const existingEnrollment = await Enrollment.findOne({ userID: userId, courseID: courseId});
     if (existingEnrollment) {
       return res.status(409).json({ success: false, message: "User is already enrolled in this course" });
     }
 
-    const enrollment = new Enrollment({ userID: userId, courseID: courseId });
+    const enrollment = new Enrollment({ userID: userId, courseID: courseId,  courseCode : courseCode   });
     await enrollment.save();
 
 
@@ -85,50 +85,35 @@ const getEnrollmentsByUserId = async (req, res) => {
 };*/
 
 const updateProgress = async (req, res) => {
+  const { userId, courseId,percentage } = req.body;
+
   try {
-    const { userId, courseId, moduleItemId, percentage } = req.body;
-    
-    // Check if userId and courseId are present in the request body
-    if (!userId || !courseId) {
-      return res.status(400).json({ error: 'userId and courseId are required' });
-    }
-
     // Find the enrollment document for the user and course
-    let enrollment = await Enrollment.findOne({ userID: userId, courseID: courseId });
+    let enrollment = await Enrollment.findOne({ userID: userId, courseID : courseId });
 
-    // If enrollment doesn't exist, create a new one
+    // If enrollment document doesn't exist, create a new one
     if (!enrollment) {
       enrollment = new Enrollment({
         userID: userId,
-        courseID: courseId,
-        progress: []
+        courseID : courseId,
+        percentage : percentage
       });
-    }
-
-    // Find the progress for the module item
-    let moduleProgress = enrollment.progress.find(item => item.moduleItemID.equals(moduleItemId));
-
-    // If progress doesn't exist, create a new one
-    if (!moduleProgress) {
-      moduleProgress = {
-        moduleItemID: moduleItemId,
-        percentage
-      };
-      enrollment.progress.push(moduleProgress);
     } else {
-      // Update existing progress
-      moduleProgress.percentage = percentage;
+      // Update the percentage
+      enrollment.percentage = percentage;
     }
 
     // Save the enrollment document
+    console.log("Enrolled course",enrollment)
     await enrollment.save();
 
-    console.log(`Progress updated for module item ${moduleItemId}`);
-    console.log(`Progress updated for module item ${percentage}`);
-    res.status(200).json({ message: `Progress updated for module item ${moduleItemId}` });
+    // Update progress for the specific module item (optional)
+    // You can implement this logic based on your requirements
+
+    res.status(200).json({ message: 'Progress updated successfully' });
   } catch (error) {
-    console.error("Error updating progress:", error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Error updating progress:', error);
+    res.status(500).json({ error: 'Failed to update progress' });
   }
 };
 
