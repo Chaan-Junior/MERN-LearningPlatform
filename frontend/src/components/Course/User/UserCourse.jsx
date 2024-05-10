@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from "../../UserHome/NavBar";
+import Footer from "../../UserHome/Footer";
 
 const UserCourse = () => {
   const [courses, setCourses] = useState([]);
@@ -38,6 +40,8 @@ const UserCourse = () => {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container mx-auto">
       <h1 className="text-4xl font-bold mt-8 mb-4 text-center text-purple-500">What to learn next</h1>
       <div className="border border-gray-300 shadow-md p-4 rounded-md mb-4 bg-red-50">
@@ -81,6 +85,8 @@ const UserCourse = () => {
         ))}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
