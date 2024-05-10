@@ -57,7 +57,7 @@ const PriceChart = () => {
             <IconWrapper>
               <ArrowUpOutlined style={{ color: "#3f8600" }} />
             </IconWrapper>
-            70000
+            $ 100
           </StatisticValue>
           <Title
             level={5}
@@ -73,7 +73,7 @@ const PriceChart = () => {
             <IconWrapper>
               <ArrowDownOutlined style={{ color: "#cf1322" }} />
             </IconWrapper>
-            950000
+            $ 150
           </StatisticValue>
           <Title
             level={5}

@@ -137,7 +137,7 @@ const SignProcess = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                Hello, Leaners !
+                Hello, Learners !
               </motion.h2>
               <motion.p
                 className="text-lg mb-8"

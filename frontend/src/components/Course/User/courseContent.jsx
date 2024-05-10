@@ -23,53 +23,59 @@ const CourseContent = () => {
         const data = await response.json();
         setCourse(data.course);
         setExpandedModules(Array(data.course.modules.length).fill(false));
-
-        // Check if progress is saved in local storage
-        const storedProgress = JSON.parse(localStorage.getItem('progressMap'));
-        if (storedProgress) {
-          setProgressMap(storedProgress);
-        }
-
-        // Check if expanded modules are saved in local storage
-        const storedExpandedModules = JSON.parse(localStorage.getItem('expandedModules'));
-        if (storedExpandedModules) {
-          setExpandedModules(storedExpandedModules);
-        }
-
-        // Calculate progress after setting the course
-        calculateProgress();
       } catch (error) {
         console.error('Error fetching course details:', error);
       }
     };
 
-    const calculateProgress = () => {
-      if (!course) return;
+    const fetchEnrollmentDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:8070/api/${courseCode}`);
+        const data = await response.json();
+        setCourse(data.course);
+        setExpandedModules(Array(data.course.modules.length).fill(false));
+      } catch (error) {
+        console.error('Error fetching course details:', error);
+      }
+    };
+
+    fetchCourseDetails();
+  }, [courseCode]);
+
+  // Retrieve progress map from local storage when component mounts
+  useEffect(() => {
+    const storedProgressMap = localStorage.getItem('progressMap');
+    if (storedProgressMap) {
+      setProgressMap(JSON.parse(storedProgressMap));
+    }
+  }, []);
+
+  // Calculate progress percentage whenever progress map changes
+  useEffect(() => {
+    const calculateProgressPercentage = () => {
+      if (!course) return; // Ensure course data is available
 
       const totalModuleItems = course.modules.reduce((acc, module) => acc + module.moduleItems.length, 0);
       const completedModuleItems = Object.values(progressMap).filter(value => value).length;
       const percentage = totalModuleItems === 0 ? 0 : (completedModuleItems / totalModuleItems) * 100;
       setProgressPercentage(percentage);
+
+
     };
 
-    // Retrieve stored course data from localStorage if available, otherwise fetch from server
-    const storedCourseData = localStorage.getItem('courseData');
-    if (storedCourseData) {
-      setCourse(JSON.parse(storedCourseData));
-    } else {
-      fetchCourseDetails();
-    }
-  }, [courseCode, course]);
+    calculateProgressPercentage();
+  }, [progressMap, course]);
+
+  // Save progress map to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('progressMap', JSON.stringify(progressMap));
+  }, [progressMap]);
 
   const handleProgressUpdate = async (moduleItemId) => {
     try {
       const totalModuleItems = course.modules.reduce((acc, module) => acc + module.moduleItems.length, 0);
-
-      // Calculate the total completed module items
       const completedModuleItems = Object.values(progressMap).filter(value => value).length;
-
-      // Calculate the percentage completion
-      const percentage = (completedModuleItems / totalModuleItems) * 100;
+      const percentage = totalModuleItems === 0 ? 0 : (completedModuleItems / totalModuleItems) * 100;
 
       const response = await fetch('http://localhost:3002/api/enroll/updateProgress', {
         method: 'PUT',
@@ -79,7 +85,6 @@ const CourseContent = () => {
         body: JSON.stringify({
           userId: uid,
           courseId: course._id,
-          moduleItemId: moduleItemId,
           percentage: percentage,
         }),
       });
@@ -88,16 +93,11 @@ const CourseContent = () => {
         throw new Error('Failed to update progress');
       }
 
-      // Update progress in local storage
       const updatedProgressMap = {
         ...progressMap,
         [moduleItemId]: true,
       };
       setProgressMap(updatedProgressMap);
-      localStorage.setItem('progressMap', JSON.stringify(updatedProgressMap));
-
-      console.log(`Progress updated for module item ${moduleItemId}`);
-      console.log(`Progress updated with thess percentage ${percentage}`);
     } catch (error) {
       console.error('Error updating progress:', error);
     }
@@ -107,14 +107,10 @@ const CourseContent = () => {
     const newExpandedModules = [...expandedModules];
     newExpandedModules[index] = !newExpandedModules[index];
     setExpandedModules(newExpandedModules);
-
-    // Store the expanded state in local storage
-    localStorage.setItem('expandedModules', JSON.stringify(newExpandedModules));
   };
 
   const handleCheckboxChange = (moduleItemId) => {
     if (!progressMap[moduleItemId]) {
-      // Only update progress if it's not already completed
       handleProgressUpdate(moduleItemId);
     }
   };
@@ -155,17 +151,21 @@ const CourseContent = () => {
             <div className="flex items-center justify-between">
               <p className="text-lg text-gray-300">Price: ${course.price}</p>
               <p className="text-lg text-gray-300">Instructor: {course.Instructor.join(', ')}</p>
-              {progressPercentage > 0 && (
-                <div className="bg-gray-900 text-white p-2 rounded">
-                  {`Progress: ${progressPercentage.toFixed(2)}%`}
-                </div>
-              )}
             </div>
           </div>
           <br />
           <div className="border border-gray-300 rounded-lg p-4 mb-6 shadow-md">
             <h2 className="text-2xl font-semibold text-black mb-4">What you'll learn</h2>
             <p className="text-lg text-gray-600">{course.description}</p>
+          </div>
+          <div className="bg-gray-200 p-4 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-gray-800">Progress</h2>
+            <div className="flex items-center mt-2">
+              <div className="w-full bg-blue-500 h-3 rounded-full">
+                <div className="bg-green-500 h-3 rounded-full" style={{ width: `${progressPercentage}%` }}></div>
+              </div>
+              <p className="ml-2 text-sm text-gray-700">{progressPercentage.toFixed(2)}%</p>
+            </div>
           </div>
           <h2 className="text-2xl font-semibold mt-8 mb-4 text-sky-700">Modules:</h2>
           {course.modules.map((module, index) => (
@@ -181,6 +181,7 @@ const CourseContent = () => {
               )}
             </div>
           ))}
+          
         </div>
       )}
     </div>

@@ -3,11 +3,12 @@ import { Breadcrumb, Layout, Menu, theme, Avatar, Dropdown, Input } from "antd";
 import {
   TeamOutlined,
   GiftOutlined,
-  SnippetsOutlined,
+  FileTextOutlined,
   HomeOutlined,
   LogoutOutlined,
   BellOutlined,
   SearchOutlined,
+  DollarOutlined 
 } from "@ant-design/icons";
 
 // dynamic change in content
@@ -15,7 +16,8 @@ import ShowFirst from "./ShowFirst";
 import UserList from "../user/UserList";
 import AdminCourse from "../../Course/Admin/AdminCourses";
 import AddCourse from "../../Course/Instructor/AddCourse";
-import Courses from "../../Course/Instructor/DisplayCourse";
+import Payment from "../../Payment/pages/Payment";
+import Courses from "../../Course/Instructor/DisplayCourse"
 
 const { Header, Content, Sider } = Layout;
 
@@ -92,9 +94,13 @@ const Layouts = () => {
             Home
           </Menu.Item>
           
-          <Menu.Item icon={<SnippetsOutlined />} key="4">Create</Menu.Item>
+          <Menu.Item key="3" icon={<FileTextOutlined/>}>Create Course</Menu.Item>
+            
+         
 
-          <Menu.Item icon={<SnippetsOutlined />} key="5">View Courses</Menu.Item>
+          <Menu.Item icon={<TeamOutlined/>} key="6">View Course</Menu.Item>
+
+          
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: collapsed ? 80 : 200 }}>
@@ -162,10 +168,8 @@ const Layouts = () => {
             <Breadcrumb.Item>Courses</Breadcrumb.Item>
           </Breadcrumb>
           {selectedKey === "1" && <ShowFirst />}
-          {selectedKey === "3" && <AdminCourse />}
-          {selectedKey === "4" && <AddCourse />}
-          {selectedKey === "5" && <Courses/>}
-          {selectedKey === "6" && <UserList />}
+          {selectedKey === "3" && <AddCourse />}
+          {selectedKey === "6" && <Courses />}
         </Content>
       </Layout>
     </Layout>

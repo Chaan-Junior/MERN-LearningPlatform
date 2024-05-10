@@ -7,7 +7,7 @@ const ManualData = () => (
       <Card>
         <Statistic
           title="ACTIVE COURSES"
-          value={20000}
+          value={10}
           valueStyle={{ color: "#1890ff" }}
           prefix={<BookOutlined />}
         />
@@ -17,7 +17,7 @@ const ManualData = () => (
       <Card>
         <Statistic
           title="ENROLLED STUDENTS"
-          value={100000}
+          value={30}
           valueStyle={{ color: "#52c41a" }}
           prefix={<UserOutlined />}
         />
@@ -27,7 +27,7 @@ const ManualData = () => (
       <Card>
         <Statistic
           title="NO OF INSTRUCTORS"
-          value={45000}
+          value={20}
           valueStyle={{ color: "#f5222d" }}
           prefix={<LikeOutlined />}
         />
