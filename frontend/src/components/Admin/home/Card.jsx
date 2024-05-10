@@ -1,4 +1,3 @@
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Card, Col } from "antd";
 import styled from "styled-components";
 
@@ -64,12 +63,6 @@ const Cards = () => (
           Basic Introduction course to Web Development
         </CardDescription>
         <CardActions>
-          <span>
-            <EditOutlined />
-          </span>
-          <span>
-            <DeleteOutlined />
-          </span>
         </CardActions>
       </CardContent>
     </StyledCard>

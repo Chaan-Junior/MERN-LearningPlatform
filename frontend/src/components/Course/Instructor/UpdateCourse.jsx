@@ -68,14 +68,14 @@ const UpdateCourse = () => {
   return (
     <div className="max-w-md mx-auto bg-gray-200 px-4 py-8 border border-black rounded-md">
       <h1 className="text-4xl font-bold mb-4 text-center">Update Course</h1>
-      <form className="max-w-lg mx-auto"  onClick={handleSubmit} >
+      <form className="max-w-lg mx-auto" onClick={handleSubmit} >
         <div className="mb-8">
           <label htmlFor="courseName" className="block text-lg font-medium text-gray-700">Course Name:</label>
           <input type="text" name="courseName" id="courseName" value={course.courseName} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
         </div>
         <div className="mb-8">
-        <label htmlFor="description" className="block text-lg font-medium text-gray-700">Description:</label>
-        <textarea name="description" id="description" value={course.description} onChange={handleChange} rows="5" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
+          <label htmlFor="description" className="block text-lg font-medium text-gray-700">Description:</label>
+          <textarea name="description" id="description" value={course.description} onChange={handleChange} rows="5" className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
         </div>
         <div className="mb-8">
           <label htmlFor="price" className="block text-lg font-medium text-gray-700">Price:</label>
@@ -85,19 +85,23 @@ const UpdateCourse = () => {
           <label htmlFor="Instructor" className="block text-lg font-medium text-gray-700">Instructor:</label>
           <input type="text" name="Instructor" id="Instructor" value={course.Instructor} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
         </div>
-       
+
         {/* Conditional rendering for republish input field */}
         {course.status !== 'published' && course.status !== 'approved' && (
-  <div className="mb-8">
-    <label htmlFor="status" className="block text-lg font-medium text-gray-700">Republish Course:</label>
-    <input type="text" name="status" id="status" value={course.status} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md" />
-  </div>
-)}
+          <div className="mb-8">
+            <label htmlFor="status" className="block text-lg font-medium text-gray-700">Republish Course:</label>
+            <select name="status" id="status" value={course.status} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-lg border-gray-300 rounded-md">
+            <option value=""></option>
+              <option value="republish">Republish</option>
+            </select>
+          </div>
+
+        )}
 
         <Link to={`/display`}>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-200 text-white font-bold py-2 px-4 rounded">
-          Update Course
-        </button>
+          <button type="submit" className="bg-blue-500 hover:bg-blue-200 text-white font-bold py-2 px-4 rounded">
+            Update Course
+          </button>
         </Link>
       </form>
     </div>
