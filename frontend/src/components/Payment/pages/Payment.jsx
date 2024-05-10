@@ -29,7 +29,7 @@ export default function Payments() {
     if (error) return <div className="text-center mt-10 text-lg text-red-500">Error: {error}</div>;
 
     return (
-        <div className="container mx-auto mt-10">
+        <div className="container ml-24 mt-10">
             <h1 className="text-2xl font-bold text-center mb-6">Payments</h1>
             {payments.length > 0 ? (
                 <div className="overflow-x-auto relative">

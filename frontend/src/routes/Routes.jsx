@@ -17,8 +17,10 @@ import ViewPayment from "../components/Payment/pages/Payment";
 import UserDashboard from "../components/UserHome/Home";
 import SignProcess from "../components/Admin/user/SignProcess";
 import Dashboard from "../components/Admin/home/Dashboard";
-import InstructorDashboard from "../components/Admin/instructor/Dashboard";
+import InstructorDashboard from "../components/Admin/instructor/Dash";
 import UserList from "../components/Admin/user/UserList";
+import UserProfile from "../components/Admin/user/UserProfile";
+import EnrolledCourses from "../components/Enrollment/Enroll"
 
 const AppRoutes = () => {
   return (
@@ -56,6 +58,8 @@ const AppRoutes = () => {
         <Route exact path="/userHome" element={<UserDashboard />} />
         <Route exact path="/" element={<SignProcess />} />
         <Route exact path="/admin/users" element={<UserList />} />
+        <Route exact path="/profile" element={<UserProfile />} />
+        <Route exact path="/enrolled-courses" element={<EnrolledCourses />} />
       </Routes>
     </div>
   );

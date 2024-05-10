@@ -53,7 +53,7 @@ export default function AddPayment() {
 
   }, [courseCode,uName, price, uid]);
   
-  const paymentData = { uname, cid, amt, uId, courseData, email};
+  const paymentData = { uname, courseCode, amt, uId, courseData, email};
   console.log(uname, cid, amt, uId);
   console.log(courseData);
    
