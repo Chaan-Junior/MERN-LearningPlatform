@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { Vonage } = require('@vonage/server-sdk');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -31,24 +32,27 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      throw new Error("Invalid Email, Try again!");
+      // Send a custom error response
+      return res.status(400).json({ error: "Invalid Email, Try again!" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new Error("Invalid Password, Try again!");
+      // Send a custom error response
+      return res.status(400).json({ error: "Invalid Password, Try again!" });
     }
 
     const token = jwt.sign(
-      { userId: user._id, role: user.role, name: user.name , email: user.email},
+      { userId: user._id, role: user.role, name: user.name, email: user.email },
       JWT_SECRET
     );
     res.json({ token });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 
 const logoutUser = async (req, res) => {
   try {
@@ -221,6 +225,27 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+const instructorRequestSms = (req, res) => {
+
+  const vonage = new Vonage({
+      apiKey: "84b976d1",
+      apiSecret: "qh8dLMYFdFZTgWgT"
+    })
+
+  const from = "Vonage APIs";
+  const to = "94772933466";
+  const text = `${req.body.name} with ${req.body.email} is requesting Instructor permission !`;
+  
+  async function sendSMS() {
+      await vonage.sms.send({to, from, text})
+          .then(resp => { console.log('Message sent successfully'); console.log(resp); res.status(200).json({message: 'Message sent successfully'}); })
+          .catch(err => { console.log('There was an error sending the messages.'); console.error(err); });
+  }
+  
+  sendSMS();
+
+}
+
 module.exports = {
   registerUser,
   loginUser,
@@ -233,5 +258,6 @@ module.exports = {
   getUsersByRole,
   grantInstructorAccess,
   getUserProfile,
-  addEnrolledCourses
+  addEnrolledCourses,
+  instructorRequestSms
 };

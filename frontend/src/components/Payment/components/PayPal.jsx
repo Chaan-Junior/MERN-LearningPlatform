@@ -33,7 +33,7 @@ export default function PayPal(props) {
           const order = await actions.order.capture();
           console.log("Successful Order: ", order);
           try {
-            await axios.post("/api/payment/add", {
+            await axios.post("http://localhost:3000/api/payment/add", {
               userid: uname,
               courseid: courseCode,
               amount: amt,
@@ -42,7 +42,8 @@ export default function PayPal(props) {
               title: "Payment Successful!",
               icon: "success",
             });
-            //await axios.post("http://localhost:5173/api/payment/sendSms", {courseid : cid, amount: amt});
+            console.log(courseCode,amt);
+            await axios.post("http://localhost:3000/api/payment/sendSms", {courseid : courseCode, amount: amt});
             await axios.put(
               "http://localhost:7000/api/users/addEnrolledCourses",
               { courseId: courseData, userId: uId}

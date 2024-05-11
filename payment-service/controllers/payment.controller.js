@@ -1,7 +1,4 @@
 const Payment = require("../models/payment.model.js");
-/*const Course = require("../models/course.model.js");
-const User = require("../models/user.model.js");*/
-const errorHandler = require('../utils/errorHandler');
 const { Vonage } = require('@vonage/server-sdk');
 
 
@@ -49,12 +46,12 @@ exports.getPayments = (req, res) => {
 exports.sendSMS = (req, res) => {
 
     const vonage = new Vonage({
-        apiKey: "40f005cf",
-        apiSecret: "xDkeV0y2ByGffj5q"
+        apiKey: "84b976d1",
+        apiSecret: "qh8dLMYFdFZTgWgT"
       })
 
     const from = "Vonage APIs";
-    const to = "94767765722";
+    const to = "94772933466";
     const text = `Payment received for ${req.body.courseid} = $${req.body.amount}`;
     
     async function sendSMS() {

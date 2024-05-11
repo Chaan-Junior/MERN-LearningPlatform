@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  user:
+    build:
+      context: ./user-service
+    ports:
+      - "7000:7000"
+    networks:
+      - ds
+    restart: always
+
+  course:
+    build:
+      context: ./course-service
+    ports:
+      - "8070:8070"
+    networks:
+      - ds
+    depends_on:
+      - user
+    restart: always
+
+  enrollment:
+    build:
+      context: ./enrollment-service
+    ports:
+      - "3002:3002"
+    networks:
+      - ds
+    depends_on:
+      - course
+      - user
+    restart: always
+
+  payment:
+    build:
+      context: ./payment-service
+    ports:
+      - "3000:3000"
+    networks:
+      - ds
+    depends_on:
+      - course
+      - user
+      - enrollment
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - payment
+      - enrollment
+      - course
+      - user
+    networks:
+      - ds
+    restart: always
+
+networks:
+  ds:
+    driver: bridge

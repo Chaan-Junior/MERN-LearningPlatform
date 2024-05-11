@@ -3,6 +3,7 @@ import { FaUserCircle, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
 import backImage from "../../../assets/bg-image.jpg";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignProcess = () => {
   const navigate = useNavigate();
@@ -37,21 +38,31 @@ const SignProcess = () => {
           body: JSON.stringify(formData),
         });
         const data = await response.json();
-
+  
         console.log("Login data:", data);
-        // Save token to local storage
-        localStorage.setItem("token", data.token);
-
-        // Extract role from token
-        const tokenPayload = JSON.parse(atob(data.token.split(".")[1]));
-
-        console.log("Token payload:", tokenPayload);
-        const userRole = tokenPayload.role;
-
-        if (userRole === "admin") {navigate("/admin")}
-        else if (userRole === "instructor") {navigate("/instructor")}
-        else {
-          navigate("/userHome");
+        if (response.ok) {
+          // Save token to local storage
+          localStorage.setItem("token", data.token);
+  
+          // Extract role from token
+          const tokenPayload = JSON.parse(atob(data.token.split(".")[1]));
+          console.log("Token payload:", tokenPayload);
+          const userRole = tokenPayload.role;
+  
+          if (userRole === "admin") {
+            navigate("/admin");
+          } else if (userRole === "instructor") {
+            navigate("/instructor");
+          } else {
+            navigate("/userHome");
+          }
+        } else {
+          // Display SweetAlert for invalid email/password
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.error,
+          });
         }
       } else {
         // Handle register
@@ -66,10 +77,19 @@ const SignProcess = () => {
           }
         );
         const data = await response.json();
-        // Save token to local storage
-        localStorage.setItem("token", data.token);
+        if (response.ok) {
+          // Save token to local storage
+          localStorage.setItem("token", data.token);
+        } else {
+          // Display SweetAlert for registration error
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: data.error,
+          });
+        }
       }
-
+  
       // Clear form data
       setFormData({
         name: "",

@@ -1,0 +1,20 @@
+FROM node:18-alpine
+
+#create a app directory
+WORKDIR /app
+
+#install app dependencies
+COPY package*.json ./
+
+#run npm install
+RUN npm install
+
+#Bundle app source
+COPY . .
+
+# Set environment variables
+ENV MONGODB_URL=mongodb+srv://Shobi:Shobi2000@course-service.8eivznc.mongodb.net/Coursedb?retryWrites=true&w=majority&appName=course-service
+
+EXPOSE 8070
+
+CMD npm run dev

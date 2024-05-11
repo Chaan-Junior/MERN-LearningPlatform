@@ -70,4 +70,6 @@ router.put(
 
 router.put("/addEnrolledCourses/",userController.addEnrolledCourses);
 
+router.post("/insSms",userController.instructorRequestSms);
+
 module.exports = router;
