@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../UserHome/NavBar";
 import Footer from "../../UserHome/Footer";
+import Swal from "sweetalert2";
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -76,6 +77,11 @@ const UserProfile = () => {
     setShowConfirmation(true);
   };
 
+  const handleRequest = async () => {
+    setConfirmationType("confirm");
+    setShowConfirmation(true);
+  };
+
   const handleConfirmation = async (confirmed) => {
     setShowConfirmation(false);
 
@@ -103,7 +109,23 @@ const UserProfile = () => {
         localStorage.removeItem("userId");
         setSuccessMessage("Logout successful");
         navigate("/");
+      }else if(confirmationType==="confirm"){
+        try{
+          const tokenString = localStorage.getItem('token');
+          const tokenPayload = JSON.parse(atob(tokenString.split(".")[1]));
+          const name = tokenPayload.name;
+          const email = tokenPayload.email;
+          await axios.post("http://localhost:7000/api/users/InsSms",{name : name, email : email});
+          Swal.fire({
+            title: "Request Sent!",
+            icon: "success",
+          });
+
+        }catch(err){
+          console.log(err)
+        }
       }
+
     }
   };
 
@@ -225,6 +247,12 @@ const UserProfile = () => {
                   Enrolled Courses
                 </button>
                 <button
+                  onClick={handleRequest}
+                  className="px-4 py-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                >
+                  Request for Instructor Role
+                </button>
+                <button
                   onClick={handleDeleteProfile}
                   className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
@@ -248,8 +276,13 @@ const UserProfile = () => {
             <h3 className="text-xl font-semibold mb-4">Confirmation</h3>
             <p className="mb-4">
               {confirmationType === "delete"
-                ? "Are you sure you want to delete your profile? This action cannot be undone."
-                : "Are you sure you want to logout?"}
+              ? "Are you sure you want to delete your profile? This action cannot be undone."
+              : confirmationType === "logout"
+              ? "Are you sure you want to logout?"
+              : confirmationType === "confirm" 
+              ? "Confirm to send Request?"
+            : ""}
+
             </p>
             <div className="flex justify-end">
               <button

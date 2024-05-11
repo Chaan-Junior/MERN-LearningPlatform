@@ -7,7 +7,7 @@ export default function Payments() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('/api/payment') // Update this URL with your actual API endpoint
+        fetch('http://localhost:3000/api/payment') // Update this URL with your actual API endpoint
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
