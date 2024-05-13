@@ -1,0 +1,17 @@
+[
+    {
+      "operation": "create",
+      "collection": "payments",
+      "document": {
+        "userid": "663c98e20bc8db2f16818c7b",
+        "courseid": "CS1010",
+        "amount": 10
+      }
+    },
+    {
+      "operation": "find",
+      "collection": "payments",
+      "query": {}
+    }
+  ]
+  

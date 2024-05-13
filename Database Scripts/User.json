@@ -1,0 +1,78 @@
+[
+    {
+        "operation": "create",
+        "collection": "users",
+        "document": {
+          "name": "John Doe",
+          "email": "john@example.com",
+          "password": "$2b$10$kG/NHmUayDis8thqc5DTuuOjIInUuByLXVNSskA9C9EMfv1hOwNue" 
+        }
+   },
+   {
+    "operation": "update",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" }, 
+    "update": {
+      "$set": {
+        "name": "John Antony",
+        "email": "johnA@example.com"
+      }
+    }
+  },
+  {
+    "operation": "delete",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" } 
+  },
+  {
+    "operation": "update",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" }, 
+    "update": {
+      "$set": {
+        "role": "updatedRole"
+      }
+    }
+  },
+  {
+    "operation": "delete",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" }
+  },
+  {
+    "operation": "find",
+    "collection": "users",
+    "query": {}
+  },
+  {
+    "operation": "find",
+    "collection": "users",
+    "query": { "role": "learner" } 
+  },
+  {
+    "operation": "update",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" },
+    "update": {
+      "$set": {
+        "role": "instructor",
+        "instructorAccess": "accept" 
+      }
+    }
+  },
+  {
+    "operation": "find",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" }
+  },
+  {
+    "operation": "update",
+    "collection": "users",
+    "query": { "_id": "663c98e20bc8db2f16818c7b" }, 
+    "update": {
+      "$addToSet": {
+        "enrolledCourses": "CS1010"
+      }
+    }
+  }     
+]

@@ -1,0 +1,74 @@
+[
+    {
+      "operation": "create",
+      "document": {
+        "courseCode": "CS1010",
+        "courseName": "Introduction to Computer Science",
+        "description": "An introductory course covering the fundamentals of computer science.",
+        "price": 10,
+        "courseThumbnail": "intro_cs_thumbnail.jpg",
+        "Instructor": "John Doe",
+        "status": "active"
+      }
+    },
+    {
+      "operation": "update",
+      "query": { "courseCode": "CS1010" },
+      "update": {
+        "$set": {
+          "courseName": "Introduction to Computer Science - Updated",
+          "description": "An introductory course covering the fundamentals of computer science. Updated description.",
+          "price": 15,
+          "courseThumbnail": "updated_thumbnail.jpg",
+          "Instructor": "Jane Smith",
+          "status": "inactive"
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "query": { "courseCode": "CS1010" }
+    },
+    {
+      "operation": "find",
+      "query": {}
+    },
+    {
+      "operation": "findOne",
+      "query": { "courseCode": "CS1010" }
+    },
+    {
+      "operation": "create",
+      "collection": "modules",
+      "document": {
+        "title": "Lecture 1"
+      }
+    },
+    {
+      "operation": "create",
+      "collection": "moduleItems",
+      "document": {
+        "title": "Introduction",
+        "type": "video",
+        "url": "lecture1_video_url"
+      }
+    },
+    {
+      "operation": "update",
+      "collection": "moduleItems",
+      "query": { "title": "Lecture 1" },
+      "update": {
+        "$set": {
+          "title": "Introduction Notes",
+          "type": "file",
+          "url": "updated_lecture1_file_url"
+        }
+      }
+    },
+    {
+      "operation": "delete",
+      "collection": "moduleItems",
+      "query": { "title": "Introduction Notes" }
+    }
+  ]
+  

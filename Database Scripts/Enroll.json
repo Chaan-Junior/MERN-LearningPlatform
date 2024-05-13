@@ -1,0 +1,32 @@
+[
+    {
+      "operation": "create",
+      "collection": "enrollments",
+      "document": {
+        "userID": "663c98e20bc8db2f16818c7b",
+        "courseID": "663d82bf65b49fd51cb289b2",
+        "courseCode": "CS1010" 
+      }
+    },
+    {
+      "operation": "find",
+      "collection": "enrollments",
+      "query": { "userID": "663c98e20bc8db2f16818c7b" }
+    },
+    {
+      "operation": "find",
+      "collection": "enrollments",
+      "query": { "userID": "663c98e20bc8db2f16818c7b", "courseID": "663d82bf65b49fd51cb289b2" }
+    },
+    {
+      "operation": "update",
+      "collection": "enrollments",
+      "query": { "userID": "663c98e20bc8db2f16818c7b", "courseID": "663d82bf65b49fd51cb289b2" },
+      "update": {
+        "$set": {
+          "percentage": 50 
+        }
+      }
+    }
+  ]
+  
